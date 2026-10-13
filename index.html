@@ -32,11 +32,10 @@
 (() => {
 'use strict';
 const KEY='angelica-portfolio-admin-v2',SESSION='angelica-admin-session',seedNode=document.getElementById('portfolio-seed');
-const seed=JSON.parse(seedNode.textContent);let state=load(),tab='projects',filter='all';
+const seed=JSON.parse(seedNode.textContent),copy=v=>JSON.parse(JSON.stringify(v));let state=load(),tab='projects',filter='all';
 const $=(q,r=document)=>r.querySelector(q),$$=(q,r=document)=>[...r.querySelectorAll(q)];
 const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=(v='')=>{try{const u=new URL(String(v).trim());return ['https:','mailto:'].includes(u.protocol)?u.href:''}catch{return''}};
-const copy=v=>JSON.parse(JSON.stringify(v));
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v?.version===2&&Array.isArray(v.projects)&&v.projects.length&&v.auth)return v}catch{}return copy(seed)}
 function save(message='Perubahan disimpan'){localStorage.setItem(KEY,JSON.stringify(state));renderPublic();toast(message)}
 function toast(message){const n=$('#njel-toast');n.textContent=message;n.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>n.classList.remove('show'),1800)}
